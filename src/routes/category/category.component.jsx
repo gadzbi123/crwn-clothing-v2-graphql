@@ -1,9 +1,9 @@
-import { gql, useMutation, useQuery } from "@apollo/client";
-import { Fragment, useContext, useEffect, useState } from "react";
+import { gql, useQuery } from "@apollo/client";
+import { Fragment, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import ProductCard from "../../components/product-card/product-card.component";
 import Spinner from "../../components/spinner/spinner.component";
-import { CategoriesContext } from "../../contexts/categories.context";
+
 import { CategoryContainer, Title } from "./category.styles";
 
 const CATEGORY = gql`
@@ -41,15 +41,16 @@ const Category = () => {
   const { loading, error, data } = useQuery(CATEGORY, {
     variables: { title: category },
   });
-  const {} = useMutation(SET_CATEGORY);
 
   const [products, setProducts] = useState([]);
+
   useEffect(() => {
     if (!data) return;
     setProducts(data.getCollectionsByTitle.items);
   }, [category, data]);
 
   console.log(data);
+
   return (
     <Fragment>
       {loading ? (
